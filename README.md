@@ -25,6 +25,7 @@ The file consists of the following columns:
 
 - `sentence_id`: the unique id of the sentence (int)
 - `sentence_text`: the text of the sentence, in quotes (")
+- `source`: the source of the sentence (`cm` for ChatMania, `sms4s`for sms4science, `noah` for NOAH)
 
 
 ### facebook.csv
@@ -51,7 +52,39 @@ The columns of the file are as follows:
 - `status_id`: the id of the status this comment was posted on
 - `parent_id`: the id of a parent post for this post, if it exists. `-1` if there is no parent.
 - `sentence_number`: the consecutive sentence number when the comment is tokenized with the `sent_tokenize` method of NLTK, starting at 0.
+- `md5_hash`: the md5-hash of the sentence to verify a correct download
 - `sentence_id`: the unique id of the sentence
+
+#### Fetching Facebook comments
+
+A sample script to fetch the facebook sentences is provided in `get_fb_comments.py` .
+
+Note that the following fields need to be set at the top of the file:
+
+- `app_id`: the Facebook application id
+- `app_secret: the Facebook application secret
+- `file_id`: the path to the source file (facebook.csv)
+- `result_file`: the path to the result file
+
+
+Alternatively, you can also set `access_token` in the file directly to an access token.
+
+The script was written for python 3.6
+
+The script can be executed as:
+
+```bash
+$ python get_fb_comments.py
+Scraping facebook.csv Comments: 2018-02-05 14:45:45.636237
+[...]
+Done!
+56945 Comments Processed in 648221.15
+```
+
+Facebook apps can be created according to [this guide](https://developers.facebook.com/docs/apps/register).
+
+This script is based on [Facebook Page Post Scraper](https://github.com/minimaxir/facebook-page-post-scraper)
+
 
 ### sentiment.csv
 
@@ -72,6 +105,15 @@ The columns are as follows:
 This corpus is provided as is. It was cleanup up as best effort, but due to the low-resourced nature of Swiss German, automated
 cleanup of the corpus is difficult and there are still roughly 30% non-Swiss German sentences in the corpus.
 The annotations were done by 5 different annotators.
+
+## Acknowledgements
+
+The following two corpora were included in this corpus:
+
+- Stark, Elisabeth; Ueberwasser, Simone; Ruef, Beni (2009-2015). Swiss SMS Corpus. University of Zurich. [www.sms4science.ch](www.sms4science.ch)
+- Nora Hollenstein and Noëmi Aepli. "Compilation of a Swiss German Dialect Corpus and its Application to PoS Tagging." COLING 2014 (2014): 85 [http://kitt.cl.uzh.ch/kitt/noah/corpus](http://kitt.cl.uzh.ch/kitt/noah/corpus)
+
+We thank the creators of the SMS4Science and NOAh corpora for their work.
 
 ## Contact
 
