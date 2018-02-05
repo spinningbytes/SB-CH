@@ -3,20 +3,24 @@ import datetime
 import csv
 import time
 from nltk.tokenize import sent_tokenize
+import hashlib
+
 try:
     from urllib.request import urlopen, Request
 except ImportError:
     from urllib2 import urlopen, Request
 
-app_id = "<APP_ID>" # Insert Id
-app_secret = "<APP_SECRET>"  # Insert Secret
-file_id = "facebook.csv"
-result_file = "output.csv"
+app_id = "<APP-ID>" # Insert Id
+app_secret = "<APP-SECRET>"  # Insert Secret
+file_id = "facebook.csv" # the source file
+result_file = "output.csv" # the target file
 
 access_token = app_id + "|" + app_secret
 
 
 def request_until_succeed(url):
+    """ Fetches an URL with urlopen
+    retries until success (to deal with ratelimits) """
     req = Request(url)
     success = False
     while success is False:
@@ -25,7 +29,11 @@ def request_until_succeed(url):
             if response.getcode() == 200:
                 success = True
         except Exception as e:
-            print(e)
+            print(e)      
+            if e.file:
+                data = json.loads(e.file.read())
+                if 'error' in data and 'error_subcode' in data['error'] and data['error']['error_subcode'] == 33:
+                    return None
             time.sleep(5)
 
             print("Error for URL {}: {}".format(url, datetime.datetime.now()))
@@ -35,6 +43,7 @@ def request_until_succeed(url):
 
 
 def unicode_decode(text):
+    """ tries to decode unicode to deal with python unicode strangeness """
     try:
         return text.encode('utf-8').decode()
     except UnicodeDecodeError:
@@ -42,6 +51,8 @@ def unicode_decode(text):
 
 
 def scrapeFacebookComments(file_id, result_file, access_token):
+    """ Reads lines in file_id and fetches relevant facebook comments,
+    using the facebook graph api, saving the result to result_file """
     with open(file_id, 'r', encoding='utf8') as f, \
             open(result_file, 'w', encoding='utf8', newline='') as o:
         input_file = csv.DictReader(f)
@@ -68,19 +79,31 @@ def scrapeFacebookComments(file_id, result_file, access_token):
             else:
                 node = "/{}".format(row['comment_id'])
                 url = base + node + parameters
-                comment = json.loads(request_until_succeed(url))
-                comment_contents[row['comment_id']] = comment # cache result in case of reuse
+                reply = request_until_succeed(url)
+                
+                if not reply:
+                    print("Comment doesn't exists anymore: " + row['comment_id'])
+                    continue
+                    
+                comment = json.loads(reply)
+                comment_contents[row['comment_id']] = comment  # cache result in case of reuse
 
             comment_message = '' if 'message' not in comment \
                               or comment['message'] is '' else \
                               unicode_decode(comment['message'])
 
             sentence_texts = sent_tokenize(comment_message,
-                                            language='german')
+                                           language='german')
             sentence_text = sentence_texts[int(row['sentence_number'])]
 
+            ha = hashlib.md5(sentence_text.encode()).hexdigest()
+
+            if ha != row['md5_hash']:
+                print("Wrong MD5 hash for comment: " + row['comment_id'] + ", " + sentence_text)
+                continue
+
             output_file.writerow({'sentence_id': row['sentence_id'],
-                                    'sentence_text': sentence_text})
+                                  'sentence_text': sentence_text})
 
             num_processed += 1
             if num_processed % 100 == 0:
