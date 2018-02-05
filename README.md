@@ -43,7 +43,7 @@ from nltk.tokenize import sent_tokenize
 
 comment_text = "this is the text of a facebook comment. You need to fetch this from facebook"
 split_sentences = sent_tokenize(comment_text, language='german')
-target_sentence = split_sentences[1] #"You need to fetch this from facebook"
+target_sentence = split_sentences[1]
 ```
 
 The columns of the file are as follows:
@@ -102,7 +102,7 @@ The columns are as follows:
 
 ## Remarks
 
-This corpus is provided as is. It was cleanup up as best effort, but due to the low-resourced nature of Swiss German, automated
+This corpus is provided as is. It was cleaned up as best effort, but due to the low-resourced nature of Swiss German, automated
 cleanup of the corpus is difficult and there are still roughly 30% non-Swiss German sentences in the corpus.
 The annotations were done by 5 different annotators.
 
