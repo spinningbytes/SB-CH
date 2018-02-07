@@ -133,7 +133,7 @@ The annotations were done by 5 different annotators.
 
 ## Acknowledgements
 
-The following two corpora were also annotated in this corpus:
+The sentiment annotated text contained elements from the following two corpora. They are referenced by ID – in order to obtain the full text, please directly access the original corpora.
 
 - Stark, Elisabeth; Ueberwasser, Simone; Ruef, Beni (2009-2015). Swiss SMS Corpus. University of Zurich. [www.sms4science.ch](www.sms4science.ch)
 - Nora Hollenstein and Noëmi Aepli. "Compilation of a Swiss German Dialect Corpus and its Application to PoS Tagging." COLING 2014 (2014): 85 [http://kitt.cl.uzh.ch/kitt/noah/corpus](http://kitt.cl.uzh.ch/kitt/noah/corpus)
