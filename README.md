@@ -125,6 +125,10 @@ The columns are as follows:
 
 See [our homepage](https://www.spinningbytes.com/resources/swissgermansentiment) for Licence information
 
+## Reference
+
+See [our homepage](https://www.spinningbytes.com/resources/swissgermansentiment) for Referencing information
+
 ## Remarks
 
 This corpus is provided as is. It was cleaned up as best effort, but due to the low-resourced nature of Swiss German, automated
