@@ -18,14 +18,13 @@ The sentiment annotations are done in 5 categories:
 
 ## Files
 
-### non_facebook.csv
+### chatmania.csv
 
-A CSV file containing sentences that didn't originate from Facebook and can be shared as is. 
+A CSV file containing sentences originating from chatmania. 
 The file consists of the following columns:
 
 - `sentence_id`: the unique id of the sentence (int)
 - `sentence_text`: the text of the sentence, in quotes (")
-- `source`: the source of the sentence (`cm` for ChatMania, `sms4s`for sms4science, `noah` for NOAH)
 
 
 ### facebook.csv
@@ -85,6 +84,29 @@ Facebook apps can be created according to [this guide](https://developers.facebo
 
 This script is based on [Facebook Page Post Scraper](https://github.com/minimaxir/facebook-page-post-scraper)
 
+### noah.csv
+
+A CSV file mapping NOAH corpus Sentences to SB-CH sentiment annotations.
+
+The columns of the file are as follows:
+
+- `document_id`: the name of the source xml file of the sentence the NOAH corpus
+- `article_id`: the id of the &lt;article&gt; tag of the sentence
+- `s_id`: the id of the &lt;s&gt; tag of the sentence
+- `md5_hash`: the md5 hash of the sentence
+- `sentence_id`: the SB-CH sentence id 
+
+
+### sms4science.csv
+
+A CSV file mapping sms4science corpus Sentences to SB-CH sentiment annotations.
+
+The columns of the file are as follows:
+
+- `sms_id`: the the sms4science sms id
+- `sentence_number`: the number of the sentence when the SMS is split with sent_tokenize()
+- `md5_hash`: the md5 hash of the sentence
+- `sentence_id`: the SB-CH sentence id 
 
 ### sentiment.csv
 
@@ -99,6 +121,9 @@ The columns are as follows:
 - `neg`: the number of times this sentence was annotated with the `NEGATIVE`label (Negative sentiment)
 - `pos`: the number of times this sentence was annotated with the `POSITIVE`label (Positive sentiment)
 
+## Licence
+
+See [our homepage](https://www.spinningbytes.com/resources/swissgermansentiment) for Licence information
 
 ## Remarks
 
@@ -108,7 +133,7 @@ The annotations were done by 5 different annotators.
 
 ## Acknowledgements
 
-The following two corpora were included in this corpus:
+The following two corpora were also annotated in this corpus:
 
 - Stark, Elisabeth; Ueberwasser, Simone; Ruef, Beni (2009-2015). Swiss SMS Corpus. University of Zurich. [www.sms4science.ch](www.sms4science.ch)
 - Nora Hollenstein and Noëmi Aepli. "Compilation of a Swiss German Dialect Corpus and its Application to PoS Tagging." COLING 2014 (2014): 85 [http://kitt.cl.uzh.ch/kitt/noah/corpus](http://kitt.cl.uzh.ch/kitt/noah/corpus)
@@ -117,4 +142,4 @@ We thank the creators of the SMS4Science and NOAh corpora for their work.
 
 ## Contact
 
-SpinningBytes AG can be contacted at info@spinningbytes.com
+[SpinningBytes AG](https://www.spinningbytes.com/resources/swissgermansentiment) can be contacted at info@spinningbytes.com
