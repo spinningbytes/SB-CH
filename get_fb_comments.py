@@ -84,8 +84,11 @@ def scrapeFacebookComments(file_id, result_file, access_token):
                 if not reply:
                     print("Comment doesn't exists anymore: " + row['comment_id'])
                     continue
-                    
-                comment = json.loads(reply)
+                
+                try:
+                    comment = json.loads(reply)
+                except:
+                    comment = json.loads(reply.decode('utf-8')) #python 3.5 and earlier bugfix
                 comment_contents[row['comment_id']] = comment  # cache result in case of reuse
 
             comment_message = '' if 'message' not in comment \
